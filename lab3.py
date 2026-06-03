@@ -32,15 +32,12 @@ class QueueFromTwoStacks:
         self._stack_input = Stack()
         self._stack_output = Stack()
         self._max_size = max_size
-        self._enqueue_count = 0
-        self._dequeue_count = 0
-    
+
     def enqueue(self, x):
         if self._max_size is not None and self.size() >= self._max_size:
             raise OverflowError(self.OVERFLOW_ERROR)
         
         self._stack_input.push(x)
-        self._enqueue_count += 1
         return True
     
     def _transfer(self):
@@ -53,8 +50,7 @@ class QueueFromTwoStacks:
         
         if self._stack_output.is_empty():
             self._transfer()
-        
-        self._dequeue_count += 1
+
         return self._stack_output.pop()
     
     def front(self):
@@ -115,9 +111,6 @@ class QueueFromTwoStacks:
         
         return False
     
-    def get_operation_count(self):
-        return (self._enqueue_count, self._dequeue_count)
-    
     def get_max_size(self):
         return self._max_size
     
@@ -126,10 +119,7 @@ class QueueFromTwoStacks:
 
 
 def main():
-    print("=" * 50)
-    print("Очередь через два стека (вариативная часть №9)")
-    print("=" * 50)
-    
+
     queue = QueueFromTwoStacks(max_size=5)
     print(f"\nСоздана очередь с макс. размером: {queue.get_max_size()}")
     
@@ -158,17 +148,10 @@ def main():
     print(f"Содержит 40? {queue.contains(40)}")
     print(f"Содержит 100? {queue.contains(100)}")
     
-    enq, deq = queue.get_operation_count()
-    print(f"\nСтатистика: enqueue={enq}, dequeue={deq}")
-    
     print("\nОчистка очереди...")
     queue.clear()
     print(f"Очередь пуста? {queue.is_empty()}")
-    
-    print("\n" + "=" * 50)
-    print("Доп. тест с разными типами данных")
-    print("=" * 50)
-    
+
     queue2 = QueueFromTwoStacks(max_size=3)
     queue2.enqueue("A")
     queue2.enqueue("B")
